@@ -3,12 +3,17 @@
 
     <sitemap>
         <loc>http://www.chunfulandu.com/post-sitemap.xml</loc>
-        <lastmod>2019-04-15T13:04:43.073Z</lastmod>
+        <lastmod>2019-04-15T13:14:21.809Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>http://www.chunfulandu.com/page-sitemap.xml</loc>
         <lastmod>2019-04-15T02:42:03.826Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>http://www.chunfulandu.com/tag-sitemap.xml</loc>
+        <lastmod>2019-04-15T13:14:21.809Z</lastmod>
     </sitemap>
 
 </sitemapindex>
