@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/">
+    <link rel="canonical" href="http://yoursite.com/tags/Hadoop/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/home.jpg') 
-            /*config*/
+            background-image: url('/img/header_img/archives-widget.jpg')
+            /*page*/
         
     }
     
@@ -206,158 +206,92 @@
                 post-container
             ">
             
-                <!-- Main Content -->
-
-
-<div class="post-preview">
-
-    <a href="/article/hadoop2-4-1完全分布式搭建/">
-        <h2 class="post-title">
-            hadoop2.4.1完全分布式搭建
-        </h2>
-        <h3 class="post-subtitle">
+                
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 归档列表 -->
             
-        </h3>
-        <div class="post-content-preview">
             
-先进入到/opt目录，然后进行解压：tar -zxvf hadoop-2.4.1.tar.gz，然后进入到hadoop-2.4.1目录，进行以下配置：
 
-配置环境变量
-将hadoop配置环境变量，vim /etc/profile，添加配置：
-export HADOOP_HOME=/opt/hadoop-2.4.1
+             <!-- 归档列表 -->
 
-然后添加至path路径，再执行source /etc/profile使配置......
+            
+            <div class="one-tag-list">
+                <span class="fa fa-calendar-times-o listing-seperator" id="2019">
+                    <span class="tag-text">2019</span>
+                </span>
+                <ul>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    04-16
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/hadoop2-4-1完全分布式搭建/" style="color: #0085a1">
+                        <span>
+                            hadoop2.4.1完全分布式搭建
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    04-16
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/linux最小化安装后，安装命令及zk安装配置/" style="color: #0085a1">
+                        <span>
+                            linux最小化安装后，安装命令及zk安装配置
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    04-15
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/hexo-github搭建个人网站/" style="color: #0085a1">
+                        <span>
+                            hexo+github搭建个人网站
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    04-15
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/首次发布jar包到maven中央仓库/" style="color: #0085a1">
+                        <span>
+                            首次发布jar包到maven中央仓库
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                </ul>
+            </div>
+            
+
+
         </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by chunfulandu on
-            2019-04-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Hadoop" title="Hadoop">Hadoop</a>
-            
-        </div>
-    
-
+    </div>
 </div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/linux最小化安装后，安装命令及zk安装配置/">
-        <h2 class="post-title">
-            linux最小化安装后，安装命令及zk安装配置
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            更换yum国内源
-curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
-yum clean all
-y......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by chunfulandu on
-            2019-04-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Linux" title="Linux">Linux</a>
-            
-              <a href="/tags/#中间件" title="中间件">中间件</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/hexo-github搭建个人网站/">
-        <h2 class="post-title">
-            hexo+github搭建个人网站
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            注：下列均在macos环境下安装。
-安装git
-安装方法简单得一批，不懂的自行了解。
-安装node.js
-
-
-安装homebrew
-可以通过brew -v来查看是否安装了homebrew，如果能正确显示homebrew的版本号，说明homebrew已经安装。
-如果没有安装，通过下面的命令进行安装：
-ruby -e &quot;$(curl -fsSL https://raw.githubus......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by chunfulandu on
-            2019-04-15
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/首次发布jar包到maven中央仓库/">
-        <h2 class="post-title">
-            首次发布jar包到maven中央仓库
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            写在前面
-我们平时开发所使用到的jar包，一般都是从maven中央仓库或者私服去拉，有没有想过人家的jar包是怎样打包到maven中央仓库供大家使用的呢？
-本着开源的精神，我们不应只知道索取，不知道奉献。所以先了解下如何将自己写的jar包发布到maven中央仓库，万一将来写了个牛逼的框架呢？
-相关地址
-
-
-工单管理
-申请上传资格和groupId的地方，jar包的发布是以解决issue的方式开......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by chunfulandu on
-            2019-04-15
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Maven" title="Maven">Maven</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
 
                 <br>
 

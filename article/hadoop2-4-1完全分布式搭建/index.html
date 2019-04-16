@@ -88,6 +88,8 @@
                     <div class="post-heading">
                         <div class="tags">
                             
+                              <a class="tag" href="/tags/#Hadoop" title="Hadoop">Hadoop</a>
+                            
                         </div>
                         <h1>hadoop2.4.1完全分布式搭建</h1>
                         <h2 class="subheading"></h2>
@@ -214,14 +216,10 @@
 <p>先进入到/opt目录，然后进行解压：<code>tar -zxvf hadoop-2.4.1.tar.gz</code>，然后进入到<code>hadoop-2.4.1</code>目录，进行以下配置：</p>
 </blockquote>
 <h2 id="配置环境变量">配置环境变量</h2>
-<ol>
-<li>
 <p>将hadoop配置环境变量，<code>vim /etc/profile</code>，添加配置：</p>
 <pre><code>export HADOOP_HOME=/opt/hadoop-2.4.1
 </code></pre>
 <p>然后添加至<code>path</code>路径，再执行<code>source /etc/profile</code>使配置生效。</p>
-</li>
-</ol>
 <h2 id="hadoop相关文件配置">hadoop相关文件配置</h2>
 <ol>
 <li>
