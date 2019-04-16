@@ -219,10 +219,11 @@
             
         </h3>
         <div class="post-content-preview">
-            Linux最小化安装后，安装命令及ZooKeeper安装配置
-更换yum国内源
-	curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
-	mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/Cen......
+            更换yum国内源
+curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+yum clean all
+y......
         </div>
     </a>
     
@@ -232,7 +233,9 @@
         </p>
         <div class="tags">
             
-              <a href="/tags/#Linux,中间件" title="Linux,中间件">Linux,中间件</a>
+              <a href="/tags/#Linux" title="Linux">Linux</a>
+            
+              <a href="/tags/#中间件" title="中间件">中间件</a>
             
         </div>
     
@@ -345,6 +348,8 @@ ruby -e &quot;$(curl -fsSL https://raw.githubus......
     <!-- no hr -->
     <h5><a href="/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
+        
+            
         
             
         

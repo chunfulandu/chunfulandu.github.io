@@ -88,7 +88,9 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Linux,中间件" title="Linux,中间件">Linux,中间件</a>
+                              <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                            
+                              <a class="tag" href="/tags/#中间件" title="中间件">中间件</a>
                             
                         </div>
                         <h1>linux最小化安装后，安装命令及zk安装配置</h1>
@@ -212,12 +214,11 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="linux最小化安装后安装命令及zookeeper安装配置">Linux最小化安装后，安装命令及ZooKeeper安装配置</h2>
-<h3 id="更换yum国内源">更换yum国内源</h3>
-<pre><code>	curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
-	mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
-	yum clean all
-	yum makecache
+                <h3 id="更换yum国内源">更换yum国内源</h3>
+<pre><code>curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+yum clean all
+yum makecache
 </code></pre>
 <h3 id="ifconfig">ifconfig</h3>
 <p>最小化安装开始是没有<code>ifconfig</code>命令的，需要通过<code>ip addr</code>命令进行查看，<br>
@@ -279,7 +280,7 @@ Main PID: 695 (firewalld)
 </code></pre>
 <p>通过<code>systemctl stop firewalld.service</code>命令关闭防火；<br>
 通过<code>systemctl disable firewalld.service</code>命令禁用防火墙。</p>
-<h4 id="关闭selinux">关闭selinux</h4>
+<h3 id="关闭selinux">关闭selinux</h3>
 <p>进入到<code>/etc/sysconfig</code>目录，然后运行<code>vim selinux</code>编辑，将<code>SELINUX=enforcing</code>改为<code>SELINUX=disabled</code>，保存退出；<br>
 然后执行<code>setenforce 0</code>，通过<code>getenforce</code>获取selinux状态，为：<code>Permissive</code></p>
 <h3 id="traceroute">traceroute</h3>
@@ -457,18 +458,12 @@ clientPort=2181
             <!-- Table of Contents -->
 
   
-    <style>
-      span.toc-nav-number{
-        display: none
-      }
-    </style>
-  
     
       <aside id="sidebar">
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#linux最小化安装后安装命令及zookeeper安装配置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Linux&#x6700;&#x5C0F;&#x5316;&#x5B89;&#x88C5;&#x540E;&#xFF0C;&#x5B89;&#x88C5;&#x547D;&#x4EE4;&#x53CA;ZooKeeper&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更换yum国内源"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x66F4;&#x6362;yum&#x56FD;&#x5185;&#x6E90;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ifconfig"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">ifconfig</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#vim"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">vim</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tree"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">tree</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#gcc"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">gcc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设置静态ip"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E;&#x9759;&#x6001;IP</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#nc"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">nc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#iptables-services"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">iptables-services</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭防火墙"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#关闭selinux"><span class="toc-nav-number">1.9.1.</span> <span class="toc-nav-text">&#x5173;&#x95ED;selinux</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#traceroute"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">traceroute</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修改主机名"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hostname"><span class="toc-nav-number">1.12.</span> <span class="toc-nav-text">hostname</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hosts"><span class="toc-nav-number">1.13.</span> <span class="toc-nav-text">hosts</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#shell脚本xsync"><span class="toc-nav-number">1.14.</span> <span class="toc-nav-text">shell&#x811A;&#x672C;xsync</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#sysstat-实时系统监控工具"><span class="toc-nav-number">1.15.</span> <span class="toc-nav-text">sysstat &#x5B9E;&#x65F6;&#x7CFB;&#x7EDF;&#x76D1;&#x63A7;&#x5DE5;&#x5177;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#wget-setup-perl"><span class="toc-nav-number">1.16.</span> <span class="toc-nav-text">wget&#x3001; setup&#x3001;perl</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#git"><span class="toc-nav-number">1.17.</span> <span class="toc-nav-text">git</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#oh-my-zsh"><span class="toc-nav-number">1.18.</span> <span class="toc-nav-text">oh my zsh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ssh"><span class="toc-nav-number">1.19.</span> <span class="toc-nav-text">ssh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#免密登陆"><span class="toc-nav-number">1.20.</span> <span class="toc-nav-text">&#x514D;&#x5BC6;&#x767B;&#x9646;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk安装配置"><span class="toc-nav-number">1.21.</span> <span class="toc-nav-text">jdk&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#zookeeper安装配置"><span class="toc-nav-number">1.22.</span> <span class="toc-nav-text">zookeeper&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更换yum国内源"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x66F4;&#x6362;yum&#x56FD;&#x5185;&#x6E90;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ifconfig"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">ifconfig</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#vim"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">vim</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tree"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">tree</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#gcc"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">gcc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设置静态ip"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E;&#x9759;&#x6001;IP</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#nc"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">nc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#iptables-services"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">iptables-services</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭防火墙"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭selinux"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">&#x5173;&#x95ED;selinux</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#traceroute"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">traceroute</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修改主机名"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hostname"><span class="toc-nav-number">13.</span> <span class="toc-nav-text">hostname</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hosts"><span class="toc-nav-number">14.</span> <span class="toc-nav-text">hosts</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#shell脚本xsync"><span class="toc-nav-number">15.</span> <span class="toc-nav-text">shell&#x811A;&#x672C;xsync</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#sysstat-实时系统监控工具"><span class="toc-nav-number">16.</span> <span class="toc-nav-text">sysstat &#x5B9E;&#x65F6;&#x7CFB;&#x7EDF;&#x76D1;&#x63A7;&#x5DE5;&#x5177;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#wget-setup-perl"><span class="toc-nav-number">17.</span> <span class="toc-nav-text">wget&#x3001; setup&#x3001;perl</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#git"><span class="toc-nav-number">18.</span> <span class="toc-nav-text">git</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#oh-my-zsh"><span class="toc-nav-number">19.</span> <span class="toc-nav-text">oh my zsh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ssh"><span class="toc-nav-number">20.</span> <span class="toc-nav-text">ssh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#免密登陆"><span class="toc-nav-number">21.</span> <span class="toc-nav-text">&#x514D;&#x5BC6;&#x767B;&#x9646;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk安装配置"><span class="toc-nav-number">22.</span> <span class="toc-nav-text">jdk&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#zookeeper安装配置"><span class="toc-nav-number">23.</span> <span class="toc-nav-text">zookeeper&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li></ol>
         
         </div>
       </aside>
@@ -488,7 +483,9 @@ clientPort=2181
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Linux,中间件" title="Linux,中间件">Linux,中间件</a>
+                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                        
+                          <a class="tag" href="/tags/#中间件" title="中间件">中间件</a>
                         
                     </div>
                 </section>
