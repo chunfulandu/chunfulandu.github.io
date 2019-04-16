@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          hexo+github搭建个人网站 - chunfulandu | Blog
+          hadoop2.4.1完全分布式搭建 - chunfulandu | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/hexo-github搭建个人网站/">
+    <link rel="canonical" href="http://yoursite.com/article/hadoop2-4-1完全分布式搭建/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -89,11 +89,11 @@
                         <div class="tags">
                             
                         </div>
-                        <h1>hexo+github搭建个人网站</h1>
+                        <h1>hadoop2.4.1完全分布式搭建</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by chunfulandu on
-                            2019-04-15
+                            2019-04-16
                         </span>
                     </div>
                 
@@ -210,130 +210,213 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>注：下列均在macos环境下安装。</p>
-<h2 id="安装git">安装git</h2>
-<p>安装方法简单得一批，不懂的自行了解。</p>
-<h2 id="安装nodejs">安装node.js</h2>
+                <blockquote>
+<p>先进入到/opt目录，然后进行解压：<code>tar -zxvf hadoop-2.4.1.tar.gz</code>，然后进入到<code>hadoop-2.4.1</code>目录，进行以下配置：</p>
+</blockquote>
+<h2 id="配置环境变量">配置环境变量</h2>
 <ol>
 <li>
-<p>安装homebrew</p>
-<p>可以通过<code>brew -v</code>来查看是否安装了homebrew，如果能正确显示homebrew的版本号，说明homebrew已经安装。<br>
-如果没有安装，通过下面的命令进行安装：</p>
-<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<p>将hadoop配置环境变量，<code>vim /etc/profile</code>，添加配置：</p>
+<pre><code>export HADOOP_HOME=/opt/hadoop-2.4.1
 </code></pre>
-</li>
-<li>
-<p>安装node.js，在终端中输入下列命令：</p>
-<pre><code>brew link node
-brew uninstall node
-brew install node
-</code></pre>
-</li>
-<li>
-<p>验证node是否安装成功，npm: node package manager，node.js的包管理工具</p>
-<pre><code>npm -v
-node -v
-# 通过homebrew安装的，执行下面命令，可查看到“node”
-brew -v
-</code></pre>
-</li>
-<li>
-<p>安装cnpm</p>
-<p>npn由于源服务器在国外下载node包经常超时，cnpm使用国内镜像，通过下面命令安装cnpm，然后通过<code>cnpm -v</code>查看是否安装成功，之后便可使用cnpm代替npm了</p>
-<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org
-cnpm -v
-</code></pre>
-<p><img src="./nodejs_install.png" alt=""></p>
+<p>然后添加至<code>path</code>路径，再执行<code>source /etc/profile</code>使配置生效。</p>
 </li>
 </ol>
-<h2 id="安装hexo">安装Hexo</h2>
+<h2 id="hadoop相关文件配置">hadoop相关文件配置</h2>
 <ol>
 <li>
-<p>安装hexo</p>
-<ul>
-<li>
-<p>我在使用<code>npm install -g hexo</code>命令进行安装时，出现如下错误：</p>
-<pre><code>fetchMetadata: sill fetchPackageMetaData error for warehouse@^2.2.0 Unexpected end of JSON input while parsing
+<p><code>cd /opt/hadoop-2.4.1/etc/hadoop</code>，（最好先对该目录下的文件进行备份，养成一个好习惯），配置<code>hadoop-env.sh</code>文件，在第27行添加以下配置：</p>
+<pre><code>export JAVA_HOME=/opt/jdk1.8.0_171
 </code></pre>
 </li>
 <li>
-<p>然后再次进行安装时，又出现下面错误：</p>
-<pre><code>npm ERR! Unexpected end of JSON input while parsing near '...p-ansi-3.0.1.tgz&quot;},&quot;e'
+<p>配置<code>core-site.xml</code>文件</p>
+<pre><code>&lt;configuration&gt;
+	&lt;!-- 指定HDFS的老大（NameNode）的地址 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;fs.defaultFS&lt;/name&gt;
+		&lt;value&gt;hdfs://server01:9000&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;!-- 指定hadoop运行时产生文件的存储目录，先进行mkdir --&gt;
+	&lt;property&gt;
+		&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+		&lt;value&gt;/opt/hadoop-2.4.1/tmp&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>配置<code>hdfs-site.xml</code></p>
+<pre><code>&lt;configuration&gt;
+	&lt;!-- 指定HDFS副本的数量 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.replication&lt;/name&gt;
+		&lt;value&gt;2&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;!-- 指定namenode节点的文件存储目录 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.name.dir&lt;/name&gt;
+		&lt;value&gt;/opt/hadoop-2.4.1/hdfs/name&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;!-- 指定datanode节点的文件存储目录 --&gt;
+    &lt;property&gt;
+		&lt;name&gt;dfs.data.dir&lt;/name&gt;
+		&lt;value&gt;/opt/hadoop-2.4.1/hdfs/name&lt;/value&gt;
+    &lt;/property&gt;
+ &lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>配置<code>mapred-site.xml(mv mapred-site.xml.template mapred-site.xml)</code></p>
+<pre><code>&lt;configuration&gt;
+	&lt;!-- 指定mr运行在yarn上 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+		&lt;value&gt;yarn&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;mapred.job.tracker&lt;/name&gt;
+		&lt;value&gt;http://server01:9001&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>配置<code>yarn-site.xml</code></p>
+<pre><code>&lt;configuration&gt;
+	&lt;!-- 指定yarn的老大（ResourceManager）的地址 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+		&lt;value&gt;server01&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;!-- reducer获取数据的方式 --&gt;
+	&lt;property&gt;
+		&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+		&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="master及slaves配置">master及slaves配置</h2>
+<ol>
+<li>
+<p>配置masters文件，<code>vim masters</code>，删除<code>localhost</code>，添加以下内容：</p>
+<pre><code>server01
+</code></pre>
+</li>
+<li>
+<p>配置slaves文件，<code>vim slaves</code>，删除<code>localhost</code>，添加以下内容：</p>
+<pre><code>server02
+server03
+</code></pre>
+</li>
+<li>
+<p>将server01的配置复制到server02，server03</p>
+<pre><code>xsync hadoop2.4.1/
+</code></pre>
+</li>
+<li>
+<p>在server02、server03服务器，删除slaves文件</p>
+<pre><code>rm -rf slaves
+</code></pre>
+</li>
+</ol>
+<h2 id="启动">启动</h2>
+<ol>
+<li>
+<p>格式化namenode（是对namenode进行初始化）</p>
+<pre><code>hdfs namenode -format
+</code></pre>
+</li>
+<li>
+<p>在master服务器（即server01）启动hadoop，再启动yarn</p>
+<pre><code>cd /opt/hadoop-2.4.1
+sbin/start-dfs.sh
+sbin/start-yarn.sh
+</code></pre>
+</li>
+<li>
+<p>在master服务器（即server01）执行<code>jps</code>命令，验证是否启动成功，使用<code>jps -l</code>可查看对应的具体的Java类</p>
+<pre><code>1634 NameNode
+1939 ResourceManager
+1800 SecondaryNameNode
+2200 Jps
+</code></pre>
+</li>
+<li>
+<p>在slave服务器（server02或server03）执行<code>jps</code>命令，验证是否启动成功</p>
+<pre><code>10993 Jps
+10786 DataNode
+10873 NodeManager	
+</code></pre>
+</li>
+</ol>
+<h2 id="管理相关">管理相关</h2>
+<ol>
+<li>
+<p>查看hadoop集群的状态，通过<code>hadoop dfsadmin -report</code>命令进行查看，用该命令可以快速定位出哪些节点挂掉了，HDFS的容量以及使用了多少，以及每个节点的硬盘使用情况。</p>
+<pre><code>Java HotSpot(TM) 64-Bit Server VM warning: You have loaded library /opt/hadoop-2.4.1/lib/native/libhadoop.so.1.0.0 which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c &lt;libfile&gt;', or link it with '-z noexecstack'.
+19/03/27 21:25:31 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Configured Capacity: 17150509056 (15.97 GB)
+Present Capacity: 12503056384 (11.64 GB)
+DFS Remaining: 12503048192 (11.64 GB)
+DFS Used: 8192 (8 KB)
+DFS Used%: 0.00%
+Under replicated blocks: 0
+Blocks with corrupt replicas: 0
+Missing blocks: 0
 
-npm ERR! A complete log of this run can be found in:
-npm ERR!     /Users/chengchf/.npm/_logs/2019-04-14T16_51_51_254Z-debug.log
+-------------------------------------------------
+Datanodes available: 2 (2 total, 0 dead)
+
+Live datanodes:
+Name: 172.16.30.130:50010 (server03)
+Hostname: server03
+Decommission Status : Normal
+Configured Capacity: 8575254528 (7.99 GB)
+DFS Used: 4096 (4 KB)
+Non DFS Used: 2291712000 (2.13 GB)
+DFS Remaining: 6283538432 (5.85 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 73.28%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Last contact: Wed Mar 27 21:25:30 CST 2019
+
+
+Name: 172.16.30.129:50010 (server02)
+Hostname: server02
+Decommission Status : Normal
+Configured Capacity: 8575254528 (7.99 GB)
+DFS Used: 4096 (4 KB)
+Non DFS Used: 2355740672 (2.19 GB)
+DFS Remaining: 6219509760 (5.79 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 72.53%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Last contact: Wed Mar 27 21:25:30 CST 2019
 </code></pre>
 </li>
 <li>
-<p>经google，推荐使用<code>npm cache clean --force</code>命令，但依旧无效，错误如下：</p>
-<pre><code>rollbackFailedOptional: verb npm-session b119e4412863cfbc
+<p>管理界面</p>
+<pre><code>http://172.16.30.128:50070（HDFS管理界面）
+http://172.16.30.128:8088（MR管理界面）
 </code></pre>
 </li>
 <li>
-<p>再次google，找到解决方法，原因为设置的代理错误，使用下列删除命令，然后使用cnpm的命令进行安装，成功</p>
-<pre><code>npm config rm proxy
-npm config rm https-proxy
-cnpm install -g hexo
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>创建存储博客的文件夹，我的存储博客的文件夹命名为chunfulandu_blog，然后进入到该文件夹</p>
-<pre><code>mkdir chunfulandu_blog
-cd chunfulandu_blog/
-</code></pre>
-</li>
-<li>
-<p>初始化本地博客，下载一系列文件，这个过程可能稍微有点慢</p>
-<pre><code>hexo init
-</code></pre>
-</li>
-<li>
-<p>安装依赖包</p>
-<pre><code>cnpm install
-</code></pre>
-</li>
-<li>
-<p>至此本地博客就搭建好了，执行下列命令生成本地网页文件并开启服务器，然后通过<code>http://localhost:4000</code>查看本地博客</p>
-<pre><code># 同hexo generate
-hexo g
-# 同hexo server
-hexo s
-</code></pre>
-<p><img src="/img/article/local_hexo.png" alt=""></p>
+<p>配置ssh免登录</p>
+<pre><code>ssh-copy-id localhost</code></pre>
 </li>
 </ol>
-<h2 id="本地博客关联github">本地博客关联github</h2>
-<ol>
-<li>
-<p>在自己的github上，新建仓库，<a href="http://xn--username-wg0m349b4m5a1v9di85d.github.io" target="_blank" rel="noopener">名称必须为username.github.io</a>，如：<a href="http://chunfulandu.github.io" target="_blank" rel="noopener">chunfulandu.github.io</a>，仓库README、License之类的留空即可，之后在发布上传时会被强制覆盖抹掉</p>
-</li>
-<li>
-<p>在本地文件夹下，打开<code>_config.yml</code>文件，修改配置如下，repository为这种形式的是配置了SSH Key之后的，如果没有配置则使用https形式的地址。</p>
-<pre><code>deploy:
-   type: git
-  repository: git@github.com:chunfulandu/chunfulandu.github.io.git
-  branch: master
-</code></pre>
-</li>
-<li>
-<p>为了能够使hexo部署到github上，需安装一个插件</p>
-<pre><code>cnpm install hexo-deployer-git --save
-</code></pre>
-</li>
-<li>
-<p>执行下列命令，然后就可在浏览器通过<code>username.github.io</code>访问你的博客了</p>
-<pre><code>hexo clean
-hexo g
-hexo d
-</code></pre>
-</li>
-</ol>
-<h2 id="选择主题">选择主题</h2>
-<p>接下来便可选择个合适自己的主题，然后deploy自己的博客到个人网站上了。</p>
-<h2 id="域名绑定">域名绑定</h2>
-<p>这个暂时没弄，一是嫌麻烦，二是确实时间有限。</p>
 
                 
 
@@ -341,13 +424,9 @@ hexo d
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/linux最小化安装后，安装命令及zk安装配置/" data-toggle="tooltip" data-placement="top" title="linux最小化安装后，安装命令及zk安装配置">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/首次发布jar包到maven中央仓库/" data-toggle="tooltip" data-placement="top" title="首次发布jar包到maven中央仓库">Next Post &rarr;</a>
+                            <a href="/article/linux最小化安装后，安装命令及zk安装配置/" data-toggle="tooltip" data-placement="top" title="linux最小化安装后，安装命令及zk安装配置">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -398,7 +477,7 @@ hexo d
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#安装git"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;git</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#安装nodejs"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;node.js</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#安装hexo"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;Hexo</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#本地博客关联github"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x672C;&#x5730;&#x535A;&#x5BA2;&#x5173;&#x8054;github</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#选择主题"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x9009;&#x62E9;&#x4E3B;&#x9898;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#域名绑定"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x57DF;&#x540D;&#x7ED1;&#x5B9A;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置环境变量"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hadoop相关文件配置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">hadoop&#x76F8;&#x5173;&#x6587;&#x4EF6;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#master及slaves配置"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">master&#x53CA;slaves&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#启动"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x542F;&#x52A8;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#管理相关"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x7BA1;&#x7406;&#x76F8;&#x5173;</span></a></li></ol>
         
         </div>
       </aside>
