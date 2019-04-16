@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          linux最小化安装后，安装命令及zk安装配置 - chunfulandu | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/article/linux最小化安装后，安装命令及zk安装配置/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Linux, 中间件" title="Linux, 中间件">Linux, 中间件</a>
+                            
+                        </div>
+                        <h1>linux最小化安装后，安装命令及zk安装配置</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by chunfulandu on
+                            2019-04-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">chunfulandu</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="linux最小化安装后安装命令及zookeeper安装配置">Linux最小化安装后，安装命令及ZooKeeper安装配置</h2>
+<h3 id="更换yum国内源">更换yum国内源</h3>
+<pre><code>	curl http://mirrors.aliyun.com/repo/Centos-7.repo &gt; /etc/yum.repos.d/CentOS-Base-7-aliyun.repo
+	mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+	yum clean all
+	yum makecache
+</code></pre>
+<h3 id="ifconfig">ifconfig</h3>
+<p>最小化安装开始是没有<code>ifconfig</code>命令的，需要通过<code>ip addr</code>命令进行查看，<br>
+通过<code>yum -y install net-tools</code>命令安装<code>ifconfig</code>命令</p>
+<h3 id="vim">vim</h3>
+<p>也是没有<code>vim</code>命令的，通过<code>rpm -qa | grep vim</code>查看有哪些vim包被安装，一般显示只有<code>vim-minimal-7.4.160-4.el7.x86_64</code>，运行<code>yum list vim*</code>查看有哪些可安装的vim软件包，输出如下：</p>
+<pre><code>vim-X11.x86_64            2:7.4.160-4.el7          base     
+vim-common.x86_64         2:7.4.160-4.el7          base     
+vim-enhanced.x86_64       2:7.4.160-4.el7          base     
+vim-filesystem.x86_64     2:7.4.160-4.el7          base
+</code></pre>
+<p>通过<code>yum -y install vim-enhanced</code>进行安装，然后设置vim配置文件，在<code>~</code>目录下，通过<code>touch .vimrc</code>命令创建<code>.vimrc</code>文件，然后通过<code>vim .vimrc</code>编辑，文件内容如下：</p>
+<pre><code>set nu
+set showmode
+set ruler
+set autoindent
+syntax on
+</code></pre>
+<h3 id="tree">tree</h3>
+<p>使用<code>yum -y install tree</code>命令安装tree命令。</p>
+<h3 id="gcc">gcc</h3>
+<p>通过<code>yum -y install gcc</code>命令安装gcc，安装完成后，可通过<code>gcc --version</code>命令查看gcc版本。</p>
+<h3 id="设置静态ip">设置静态IP</h3>
+<p><code>/etc/sysconfig/network-scripts</code>，编辑<code>ifcfg-ens*</code>文件</p>
+<pre><code>TYPE=&quot;Ethernet&quot;
+PROXY_METHOD=&quot;none&quot;
+BROWSER_ONLY=&quot;no&quot;
+BOOTPROTO=&quot;static&quot;
+UUID=&quot;a0617c8a-8ab7-4b6a-83a7-4408d7b55095&quot;
+DEVICE=&quot;ens33&quot;
+ONBOOT=&quot;yes&quot;
+IPADDR=172.16.30.128
+NETMASK=255.255.255.0
+GATEWAY=172.16.30.2
+BROADCAST=172.16.30.255
+DNS1=114.114.114.114
+DNS2=8.8.8.8
+</code></pre>
+<h3 id="nc">nc</h3>
+<p>我们通过nc或者telnet命令访问2181端口，通过执行ruok（Are you OK?）命令来检查zookeeper是否启动成功。（下面会介绍）	<br>
+运行<code>echo ruok | nc localhost 2181</code>该命令，发现<code>nc</code>命令不存在，下面进行安装。<br>
+运行<code>yum list telnet*</code>命令，发现可安装的包有：</p>
+<pre><code>telnet.x86_64           1:0.17-64.el7          base
+telnet-server.x86_64    1:0.17-64.el7          base
+</code></pre>
+<p>通过<code>yum -y install telnet.x86_64</code>和<code>yum</code>命令安装<code>telnet -y install telnet-server.x86_64</code>命令；<br>
+通过<code>yum -y install nc</code>命令安装<code>nc</code>命令。</p>
+<h3 id="iptables-services">iptables-services</h3>
+<p>通过<code>yum -y install iptables-services</code>命令安装</p>
+<h3 id="关闭防火墙">关闭防火墙</h3>
+<p>通过<code>systemctl status firewalld.service</code>命令查看防火墙状态，输出如下，说明防火墙为启动状态：</p>
+<pre><code>● firewalld.service - firewalld - dynamic firewall daemon
+	Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: 	enabled)
+	Active: active (running) since 一 2018-07-02 10:14:12 CST; 2h 15min ago
+ 	  Docs: man:firewalld(1)
+Main PID: 695 (firewalld)
+	CGroup: /system.slice/firewalld.service
+       └─695 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+</code></pre>
+<p>通过<code>systemctl stop firewalld.service</code>命令关闭防火；<br>
+通过<code>systemctl disable firewalld.service</code>命令禁用防火墙。</p>
+<h4 id="关闭selinux">关闭selinux</h4>
+<p>进入到<code>/etc/sysconfig</code>目录，然后运行<code>vim selinux</code>编辑，将<code>SELINUX=enforcing</code>改为<code>SELINUX=disabled</code>，保存退出；<br>
+然后执行<code>setenforce 0</code>，通过<code>getenforce</code>获取selinux状态，为：<code>Permissive</code></p>
+<h3 id="traceroute">traceroute</h3>
+<p>通过<code>yum -y install traceroute</code>进行安装，然后执行<code>traceroute www.baidu.com</code>可查看该ip地址的网关，如下所示：</p>
+<pre><code>gateway (172.16.30.2)  0.347 ms  0.114 ms  0.213 ms
+</code></pre>
+<h3 id="修改主机名">修改主机名</h3>
+<p><code>vim /etc/sysconfig/network</code></p>
+<pre><code>NETWORKING=yes
+HOSTNAME=server01
+</code></pre>
+<h3 id="hostname">hostname</h3>
+<p>通过<code>vim /etc/hostname</code>命令，编辑hostname文件，将该主机名修改为自定义的名字，如：<code>server01</code></p>
+<h3 id="hosts">hosts</h3>
+<p>若配置了3台机器，hostsname分别为<code>server01</code> <code>server02</code> <code>server03</code>，则通过<code>/etc/hosts</code>命令编辑，如下：</p>
+<pre><code>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+172.16.30.128 server01
+172.16.30.129 server02
+172.16.30.130 server03
+</code></pre>
+<h3 id="shell脚本xsync">shell脚本xsync</h3>
+<ol>
+<li>
+<p>由于xsync基于rsync，所以得先安装rsync，<code>yum -y install rsync</code></p>
+<pre><code>rsync 远程同步工具，主要用于备份和镜像。具有速度快、避免复制相同内容和支持符号链接的优点，它只是拷贝文件不同的部分，因而减少了网络负担。 
+rsync -rvl $pdir/$fname $user@hadoop$host:$pdir 
+常用参数： 
+-r, –recursive 对子目录以递归模式处理 
+-R, –relative 使用相对路径信息 
+-l, –links 保留软链结 
+-v, –verbose 详细模式输出，传输过程可见 
+… 
+</code></pre>
+</li>
+<li>
+<p>在<code>/usr/local/bin</code>目录下，添加<code>xsync</code>文件：<code>touch xsync</code></p>
+<pre><code> #!/bin/sh
+ #获取输入参数个数，如果没有参数，直接退出
+ pcount=$#
+  if((pcount==0)); then
+    echo no args...;
+      exit;
+   fi
+ # 获取文件名称
+ p1=$1
+ fname=`basename $p1`
+ echo fname=$fname
+ # 获取上级目录到绝对路径
+ pdir=`cd -P $(dirname $p1); pwd`
+ echo pdir=$pdir
+ # 获取当前用户名称
+ user=`whoami`
+ # 循环
+ for((host=1; host&lt;=3; host++)); do
+     echo $pdir/$fname $user@slave$host:$pdir
+     echo ==================slave$host==================
+     rsync -rvl $pdir/$fname $user@server0$host:$pdir
+ done
+ #Note:这里的slave对应自己主机名，需要做相应修改。另外，for循环中的host的边界值由自己的主机编号决定。
+</code></pre>
+</li>
+</ol>
+<h3 id="sysstat-实时系统监控工具">sysstat 实时系统监控工具</h3>
+<p>通过<code>yum -y install sysstat</code>进行安装，安装完成后，可使用iostat、mpstat、sar、sa等命令</p>
+<h3 id="wget-setup-perl">wget、 setup、perl</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget</span><br><span class="line">yum -y install setup</span><br><span class="line">yum -y install perl</span><br></pre></td></tr></table></figure>
+<h3 id="git">git</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y git</span><br><span class="line">git config --global user.name &quot;chengchf&quot;</span><br><span class="line">git config --global user.email &quot;cheng876331@163.com&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="oh-my-zsh">oh my zsh</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install zsh</span><br><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</span><br></pre></td></tr></table></figure>
+<p><code>-&gt; ~ vim .zshrc</code>，添加如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias javac=&quot;javac -J-Dfile.encoding=utf8&quot;</span><br><span class="line">alias grep=&quot;grep --color=auto&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="ssh">ssh</h3>
+<p>通过<code>yum -y install ssh</code>进行安装，发现输出：<code>Redirecting to /bin/systemctl start sshd.service</code>，意思为需要执行此命令进行安装，于是执行<code>/bin/systemctl start sshd.service</code>进行安装。</p>
+<h3 id="免密登陆">免密登陆</h3>
+<p>通过<code>ssh-keygen -t rsa</code>生成公钥私钥，发现在<code>~/.ssh/</code>目录下，生成了<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，分别为私钥、公钥。<br>
+若在server01机器下对server02进行免密登录，执行<code>ssh-copy-id root@server02</code>命令，将server01下的公钥复制到server02的<code>~/.ssh/</code>目录下，然后通过<code>ssh root@server02</code>命令，登录到server02的root用户。</p>
+<h3 id="jdk安装配置">jdk安装配置</h3>
+<p>将jdk压缩包放置在/opt下，然后通过<code>tar -zxvf jdk-8u171-linux-x64.tar.gz</code>命令解压，得到<code>jdk1.8.0_171</code>文件夹。<br>
+jdk与zookeeper的环境变量配置文件为<code>/etc/profile</code>，如下：</p>
+<pre><code># environment
+JAVA_HOME=/opt/jdk1.8.0_171
+JRE_HOME=$JAVA_HOME/jre
+JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
+ZOOKEEPER_HOME=/opt/zookeeper-3.4.8/
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$CLASSPATH:$JAVA_TOOL_OPTIONS:$ZOOKEEPER_HOME/bin:$PATH
+</code></pre>
+<p>然后执行<code>source /etc/profile</code>，使文件生效。<br>
+若需要配置其他软件，同理。</p>
+<p>若配置环境出错，导致系统命令无法使用，无法再对<code>/etc/profile</code>文件进行编辑，这时需要执行<code>export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin</code>命令让系统命令有效，然后对<code>/etc/profile</code>文件进行编辑，再执行<code>source /etc/profile</code>使其生效。</p>
+<h3 id="zookeeper安装配置">zookeeper安装配置</h3>
+<p>将zookeeper压缩包放置在/opt下，然后执行<code>tar -zxvf zookeeper-3.4.8.tar.gz</code>命令进行解压，得到<code>zookeeper-3.4.8</code>文件夹，然后配置环境变量，上面已经介绍。</p>
+<p>先在<code>/etc</code>目录下，执行<code>mkdir zookeeper/</code>创建目录，然后将<code>/opt/zookeeper-3.4.8/conf/zoo_sample.cfg</code>文件复制到<code>/etc/zookeeper/</code>下，以防文件被损坏，然后将<code>/opt/zookeeper-3.4.8/conf/</code>下的<code>zoo_sample.cfg</code>文件修改为<code>zoo.cfg</code>，命令为<code>mv zoo_sample.cfg zoo.cfg</code>。</p>
+<p>在<code>/usr</code>目录下，使用<code>mkdir -p zookeeper/{data,log}</code>命令创建<code>/usr/zookeeper/data</code> <code>/usr/zookeeper/log</code>目录，使用<code>vim zoo.cfg</code>命令编辑文件，修改后的部分文件内容如下：</p>
+<pre><code># The number of milliseconds of each tick
+tickTime=2000
+# The number of ticks that the initial
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between
+# sending a request and getting an acknowledgement
+syncLimit=5
+# the directory where the snapshot is stored.
+# do not use /tmp for storage, /tmp here is just
+# example sakes.
+dataDir=/usr/zookeeper/data
+dataLogDir=/usr/zookeeper/log
+
+#server.A=B:C:D  其中A是一个数字，代表这是第几号服务器；B是服务器的IP地址；C表示服务器与群集中的“领导者”交换信息的端口；当领导者失效后，D表示用来执行选举时服务器相互通信的端口。
+server.1=172.16.30.128:2888:3888
+server.2=172.16.30.129:2888:3888
+server.3=172.16.30.130:2888:3888
+
+# the port at which the clients will connect
+clientPort=2181
+</code></pre>
+<p>在<code>/usr/zookeeper/data</code>目录下，创建<code>myid</code>文件，上面配置的<code>server.1</code>的机器，<code>myid</code>的内容为<code>1</code>，<code>server.2</code>的机器，<code>myid</code>的内容为<code>2</code>，<code>server.3</code>的机器，<code>myid</code>的内容为<code>3</code>。</p>
+<p>在3台机器上，分别执行<code>zkServer.sh start</code>命令启动zookeeper，然后使用<code>jps</code>命令查看进程，如下则表示启动成功：</p>
+<pre><code>2322 QuorumPeerMain
+2630 Jps
+</code></pre>
+<p>也可通过<code>echo ruok | nc localhost 2181</code>命令来检查zookeeper是否启动成功，若成功，输出：</p>
+<pre><code>imok
+</code></pre>
+<p>然后在各机器上运行<code>zkServer.sh status</code>检查各个zookeeper的状态，其中有一台为<code>master</code>，其余两台为<code>follower</code>，master在哪台机器为自动选举的结果。</p>
+<p>使用<code>zkServer.sh stop</code>关闭zookeeper服务。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/hexo-github搭建个人网站/" data-toggle="tooltip" data-placement="top" title="hexo+github搭建个人网站">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#linux最小化安装后安装命令及zookeeper安装配置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Linux&#x6700;&#x5C0F;&#x5316;&#x5B89;&#x88C5;&#x540E;&#xFF0C;&#x5B89;&#x88C5;&#x547D;&#x4EE4;&#x53CA;ZooKeeper&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更换yum国内源"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x66F4;&#x6362;yum&#x56FD;&#x5185;&#x6E90;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ifconfig"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">ifconfig</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#vim"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">vim</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tree"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">tree</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#gcc"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">gcc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设置静态ip"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E;&#x9759;&#x6001;IP</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#nc"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">nc</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#iptables-services"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">iptables-services</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭防火墙"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#关闭selinux"><span class="toc-nav-number">1.9.1.</span> <span class="toc-nav-text">&#x5173;&#x95ED;selinux</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#traceroute"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">traceroute</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修改主机名"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hostname"><span class="toc-nav-number">1.12.</span> <span class="toc-nav-text">hostname</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hosts"><span class="toc-nav-number">1.13.</span> <span class="toc-nav-text">hosts</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#shell脚本xsync"><span class="toc-nav-number">1.14.</span> <span class="toc-nav-text">shell&#x811A;&#x672C;xsync</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#sysstat-实时系统监控工具"><span class="toc-nav-number">1.15.</span> <span class="toc-nav-text">sysstat &#x5B9E;&#x65F6;&#x7CFB;&#x7EDF;&#x76D1;&#x63A7;&#x5DE5;&#x5177;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#wget-setup-perl"><span class="toc-nav-number">1.16.</span> <span class="toc-nav-text">wget&#x3001; setup&#x3001;perl</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#git"><span class="toc-nav-number">1.17.</span> <span class="toc-nav-text">git</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#oh-my-zsh"><span class="toc-nav-number">1.18.</span> <span class="toc-nav-text">oh my zsh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ssh"><span class="toc-nav-number">1.19.</span> <span class="toc-nav-text">ssh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#免密登陆"><span class="toc-nav-number">1.20.</span> <span class="toc-nav-text">&#x514D;&#x5BC6;&#x767B;&#x9646;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk安装配置"><span class="toc-nav-number">1.21.</span> <span class="toc-nav-text">jdk&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#zookeeper安装配置"><span class="toc-nav-number">1.22.</span> <span class="toc-nav-text">zookeeper&#x5B89;&#x88C5;&#x914D;&#x7F6E;</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.cnblogs.com/ccfdod/" target="_blank">博客园 chunfulandu</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container" style="height:20px">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p class="copyright text-muted">
+                    Copyright &copy; chunfulandu 2019 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
