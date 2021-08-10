@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>hadoop2.4.1完全分布式搭建 | chunfulandu | blog</title><meta name="keywords" content="Hadoop,Java"><meta name="author" content="chunfulandu"><meta name="copyright" content="chunfulandu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="先进入到&#x2F;opt目录，然后进行解压：tar -zxvf hadoop-2.4.1.tar.gz，然后进入到hadoop-2.4.1目录，进行以下配置：  配置环境变量将hadoop配置环境变量，vim &#x2F;etc&#x2F;profile，添加配置： export HADOOP_HOME&#x3D;&#x2F;opt&#x2F;hadoop-2.4.1  然后添加至path路径，再执行source &#x2F;etc&#x2F;profile使配置生效。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop2.4.1完全分布式搭建">
+<meta property="og:url" content="http://example.com/2019/04/16/hadoop2-4-1%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="chunfulandu | blog">
+<meta property="og:description" content="先进入到&#x2F;opt目录，然后进行解压：tar -zxvf hadoop-2.4.1.tar.gz，然后进入到hadoop-2.4.1目录，进行以下配置：  配置环境变量将hadoop配置环境变量，vim &#x2F;etc&#x2F;profile，添加配置： export HADOOP_HOME&#x3D;&#x2F;opt&#x2F;hadoop-2.4.1  然后添加至path路径，再执行source &#x2F;etc&#x2F;profile使配置生效。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-04-16T13:33:36.000Z">
+<meta property="article:modified_time" content="2021-08-10T01:49:55.481Z">
+<meta property="article:author" content="chunfulandu">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.png"><link rel="canonical" href="http://example.com/2019/04/16/hadoop2-4-1%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'hadoop2.4.1完全分布式搭建',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-10 09:49:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">chunfulandu | blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">hadoop2.4.1完全分布式搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-16T13:33:36.000Z" title="发表于 2019-04-16 21:33:36">2019-04-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-10T01:49:55.481Z" title="更新于 2021-08-10 09:49:55">2021-08-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="hadoop2.4.1完全分布式搭建"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><blockquote>
+<p>先进入到/opt目录，然后进行解压：<code>tar -zxvf hadoop-2.4.1.tar.gz</code>，然后进入到<code>hadoop-2.4.1</code>目录，进行以下配置：</p>
+</blockquote>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>将hadoop配置环境变量，<code>vim /etc/profile</code>，添加配置：</p>
+<pre><code>export HADOOP_HOME=/opt/hadoop-2.4.1
+</code></pre>
+<p>然后添加至<code>path</code>路径，再执行<code>source /etc/profile</code>使配置生效。</p>
+<h2 id="hadoop相关文件配置"><a href="#hadoop相关文件配置" class="headerlink" title="hadoop相关文件配置"></a>hadoop相关文件配置</h2><ol>
+<li><p><code>cd /opt/hadoop-2.4.1/etc/hadoop</code>，（最好先对该目录下的文件进行备份，养成一个好习惯），配置<code>hadoop-env.sh</code>文件，在第27行添加以下配置：</p>
+<pre><code> export JAVA_HOME=/opt/jdk1.8.0_171
+</code></pre>
+</li>
+<li><p>配置<code>core-site.xml</code>文件</p>
+<pre><code> &lt;configuration&gt;
+     &lt;!-- 指定HDFS的老大（NameNode）的地址 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;fs.defaultFS&lt;/name&gt;
+         &lt;value&gt;hdfs://server01:9000&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;!-- 指定hadoop运行时产生文件的存储目录，先进行mkdir --&gt;
+     &lt;property&gt;
+         &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+         &lt;value&gt;/opt/hadoop-2.4.1/tmp&lt;/value&gt;
+     &lt;/property&gt;
+ &lt;/configuration&gt;
+ 
+</code></pre>
+</li>
+<li><p>配置<code>hdfs-site.xml</code></p>
+<pre><code> &lt;configuration&gt;
+     &lt;!-- 指定HDFS副本的数量 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;dfs.replication&lt;/name&gt;
+         &lt;value&gt;2&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;!-- 指定namenode节点的文件存储目录 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;dfs.name.dir&lt;/name&gt;
+         &lt;value&gt;/opt/hadoop-2.4.1/hdfs/name&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;!-- 指定datanode节点的文件存储目录 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;dfs.data.dir&lt;/name&gt;
+         &lt;value&gt;/opt/hadoop-2.4.1/hdfs/name&lt;/value&gt;
+     &lt;/property&gt;
+ &lt;/configuration&gt;
+ 
+</code></pre>
+</li>
+<li><p>配置<code>mapred-site.xml(mv mapred-site.xml.template mapred-site.xml)</code></p>
+<pre><code> &lt;configuration&gt;
+     &lt;!-- 指定mr运行在yarn上 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+         &lt;value&gt;yarn&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;property&gt;
+         &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+         &lt;value&gt;http://server01:9001&lt;/value&gt;
+     &lt;/property&gt;
+ &lt;/configuration&gt;
+ 
+</code></pre>
+</li>
+<li><p>配置<code>yarn-site.xml</code></p>
+<pre><code> &lt;configuration&gt;
+     &lt;!-- 指定yarn的老大（ResourceManager）的地址 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+         &lt;value&gt;server01&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;!-- reducer获取数据的方式 --&gt;
+     &lt;property&gt;
+         &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+         &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+     &lt;/property&gt;
+ &lt;/configuration&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="master及slaves配置"><a href="#master及slaves配置" class="headerlink" title="master及slaves配置"></a>master及slaves配置</h2><ol>
+<li><p>配置masters文件，<code>vim masters</code>，删除<code>localhost</code>，添加以下内容：</p>
+<pre><code> server01
+</code></pre>
+</li>
+<li><p>配置slaves文件，<code>vim slaves</code>，删除<code>localhost</code>，添加以下内容：</p>
+<pre><code> server02
+ server03
+</code></pre>
+</li>
+<li><p>将server01的配置复制到server02，server03</p>
+<pre><code> xsync hadoop2.4.1/
+ 
+</code></pre>
+</li>
+<li><p>在server02、server03服务器，删除slaves文件</p>
+<pre><code> rm -rf slaves
+</code></pre>
+</li>
+</ol>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><ol>
+<li><p>格式化namenode（是对namenode进行初始化）</p>
+<pre><code> hdfs namenode -format
+ 
+</code></pre>
+</li>
+<li><p>在master服务器（即server01）启动hadoop，再启动yarn</p>
+<pre><code> cd /opt/hadoop-2.4.1
+ sbin/start-dfs.sh
+ sbin/start-yarn.sh
+ 
+</code></pre>
+</li>
+<li><p>在master服务器（即server01）执行<code>jps</code>命令，验证是否启动成功，使用<code>jps -l</code>可查看对应的具体的Java类</p>
+<pre><code> 1634 NameNode
+ 1939 ResourceManager
+ 1800 SecondaryNameNode
+ 2200 Jps
+ 
+</code></pre>
+</li>
+<li><p>在slave服务器（server02或server03）执行<code>jps</code>命令，验证是否启动成功</p>
+<pre><code> 10993 Jps
+ 10786 DataNode
+ 10873 NodeManager    
+</code></pre>
+</li>
+</ol>
+<h2 id="管理相关"><a href="#管理相关" class="headerlink" title="管理相关"></a>管理相关</h2><ol>
+<li><p>查看hadoop集群的状态，通过<code>hadoop dfsadmin -report</code>命令进行查看，用该命令可以快速定位出哪些节点挂掉了，HDFS的容量以及使用了多少，以及每个节点的硬盘使用情况。</p>
+<pre><code> Java HotSpot(TM) 64-Bit Server VM warning: You have loaded library /opt/hadoop-2.4.1/lib/native/libhadoop.so.1.0.0 which might have disabled stack guard. The VM will try to fix the stack guard now.
+ It&#39;s highly recommended that you fix the library with &#39;execstack -c &lt;libfile&gt;&#39;, or link it with &#39;-z noexecstack&#39;.
+ 19/03/27 21:25:31 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+ Configured Capacity: 17150509056 (15.97 GB)
+ Present Capacity: 12503056384 (11.64 GB)
+ DFS Remaining: 12503048192 (11.64 GB)
+ DFS Used: 8192 (8 KB)
+ DFS Used%: 0.00%
+ Under replicated blocks: 0
+ Blocks with corrupt replicas: 0
+ Missing blocks: 0
+ 
+ -------------------------------------------------
+ Datanodes available: 2 (2 total, 0 dead)
+ 
+ Live datanodes:
+ Name: 172.16.30.130:50010 (server03)
+ Hostname: server03
+ Decommission Status : Normal
+ Configured Capacity: 8575254528 (7.99 GB)
+ DFS Used: 4096 (4 KB)
+ Non DFS Used: 2291712000 (2.13 GB)
+ DFS Remaining: 6283538432 (5.85 GB)
+ DFS Used%: 0.00%
+ DFS Remaining%: 73.28%
+ Configured Cache Capacity: 0 (0 B)
+ Cache Used: 0 (0 B)
+ Cache Remaining: 0 (0 B)
+ Cache Used%: 100.00%
+ Cache Remaining%: 0.00%
+ Last contact: Wed Mar 27 21:25:30 CST 2019
+ 
+ 
+ Name: 172.16.30.129:50010 (server02)
+ Hostname: server02
+ Decommission Status : Normal
+ Configured Capacity: 8575254528 (7.99 GB)
+ DFS Used: 4096 (4 KB)
+ Non DFS Used: 2355740672 (2.19 GB)
+ DFS Remaining: 6219509760 (5.79 GB)
+ DFS Used%: 0.00%
+ DFS Remaining%: 72.53%
+ Configured Cache Capacity: 0 (0 B)
+ Cache Used: 0 (0 B)
+ Cache Remaining: 0 (0 B)
+ Cache Used%: 100.00%
+ Cache Remaining%: 0.00%
+ Last contact: Wed Mar 27 21:25:30 CST 2019
+ 
+</code></pre>
+</li>
+<li><p>管理界面</p>
+<pre><code> http://172.16.30.128:50070（HDFS管理界面）
+ http://172.16.30.128:8088（MR管理界面）
+ 
+</code></pre>
+</li>
+<li><p>配置ssh免登录</p>
+<pre><code> ssh-copy-id localhost
+</code></pre>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">chunfulandu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2019/04/16/hadoop2-4-1%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/">http://example.com/2019/04/16/hadoop2-4-1%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">chunfulandu | blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hadoop/">Hadoop</a><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat_reward.jpeg" target="_blank"><img class="post-qr-code-img" src="/img/wechat_reward.jpeg"/></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/05/hello-world/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hello World</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/16/linux%E6%9C%80%E5%B0%8F%E5%8C%96%E5%AE%89%E8%A3%85%E5%90%8E%EF%BC%8C%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%E5%8F%8Azk%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">linux最小化安装后，安装命令及zk安装配置</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">配置环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hadoop%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-text">hadoop相关文件配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master%E5%8F%8Aslaves%E9%85%8D%E7%BD%AE"><span class="toc-text">master及slaves配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E7%9B%B8%E5%85%B3"><span class="toc-text">管理相关</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 By chunfulandu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
