@@ -3753,7 +3753,7 @@ blockquote footer cite:before {
 }
 #pagination .prev_info,
 #pagination .next_info {
-  color: var(--white);
+  color: var(--dark-black);
   font-weight: 500;
 }
 #pagination .next-post .pagination-info {
@@ -3764,7 +3764,7 @@ blockquote footer cite:before {
 }
 #pagination .prev-post .label,
 #pagination .next-post .label {
-  color: var(--light-grey);
+  color: var(--dark-black);
   text-transform: uppercase;
   font-size: 90%;
 }
@@ -3800,7 +3800,7 @@ blockquote footer cite:before {
 }
 #pagination.pagination-post {
   margin-top: 2rem;
-  background: #000;
+  background: #eee;
 }
 #article-container {
   word-wrap: break-word;
@@ -3975,7 +3975,7 @@ blockquote footer cite:before {
   margin: 3px;
   width: calc(33.333% - 6px);
   height: 200px;
-  background: #000;
+  background: #eee;
   vertical-align: bottom;
 }
 .relatedPosts > .relatedPosts-list > div:hover .cover {
@@ -4025,11 +4025,11 @@ blockquote footer cite:before {
   transform: translate(0, -50%);
 }
 .relatedPosts > .relatedPosts-list .content .date {
-  color: var(--light-grey);
+  color: var(--dark-black);
   font-size: 90%;
 }
 .relatedPosts > .relatedPosts-list .content .title {
-  color: var(--white);
+  color: var(--dark-black);
   -webkit-line-clamp: 2;
 }
 .post-reward {
